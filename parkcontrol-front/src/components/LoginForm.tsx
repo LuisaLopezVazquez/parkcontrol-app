@@ -93,7 +93,7 @@ export function LoginForm({ onLogin, loading, error }: LoginFormProps) {
               <p className="font-medium text-foreground mb-1">Credenciales de prueba (API + db.json)</p>
               <p>
                 Correo:{" "}
-                <span className="font-mono text-accent">carlos@residencial-altavista.com</span>
+                <span className="font-mono text-accent">luisa@residencial-altavista.com</span>
               </p>
               <p>
                 Contraseña: <span className="font-mono text-accent">demo</span>

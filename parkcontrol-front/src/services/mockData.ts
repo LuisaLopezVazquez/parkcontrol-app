@@ -36,8 +36,8 @@ export interface DashboardMetrics {
 
 export const mockUser: User = {
   id: "1",
-  name: "Carlos Méndez",
-  email: "carlos@residencial-altavista.com",
+  name: "Luisa Lopez",
+  email: "luisa@residencial-altavista.com",
   role: "Administrador",
   condominium: "Residencial Altavista",
 };

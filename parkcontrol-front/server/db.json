@@ -1,17 +1,17 @@
 {
   "sessions": [
     {
-      "token": "ce5c68ea-9fe0-4e91-a5f7-310ecf63aa6f",
+      "token": "9a3d6c54-0046-49f5-9d2e-f264a7d4cefa",
       "userId": "1",
-      "createdAt": "2026-04-11T18:52:45.892Z"
+      "createdAt": "2026-04-11T19:03:05.305Z"
     }
   ],
   "users": [
     {
       "id": "1",
-      "email": "carlos@residencial-altavista.com",
+      "email": "luisa@residencial-altavista.com",
       "password": "demo",
-      "name": "Carlos Méndez",
+      "name": "Luisa Lopez",
       "role": "Administrador",
       "condominium": "Residencial Altavista"
     }
@@ -78,8 +78,10 @@
     {
       "id": "9",
       "number": "B-03",
-      "status": "available",
-      "floor": "Nivel 1"
+      "status": "occupied",
+      "floor": "Nivel 1",
+      "vehiclePlate": "VIS-0001",
+      "ownerName": "Visitante"
     },
     {
       "id": "10",
