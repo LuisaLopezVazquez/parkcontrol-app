@@ -26,7 +26,7 @@ const menuItems = [
 
 interface TopNavBarProps {
   user: User;
-  onLogout: () => void;
+  onLogout: () => void | Promise<void>;
 }
 
 export function TopNavBar({ user, onLogout }: TopNavBarProps) {

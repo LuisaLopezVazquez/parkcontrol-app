@@ -90,9 +90,14 @@ export function LoginForm({ onLogin, loading, error }: LoginFormProps) {
             </button>
 
             <div className="rounded-lg border border-border bg-muted/50 px-4 py-3 text-center text-sm text-muted-foreground">
-              <p className="font-medium text-foreground mb-1">Credenciales de prueba</p>
-              <p>Correo: <span className="font-mono text-accent">admin@test.com</span></p>
-              <p>Contraseña: <span className="font-mono text-accent">1234</span></p>
+              <p className="font-medium text-foreground mb-1">Credenciales de prueba (API + db.json)</p>
+              <p>
+                Correo:{" "}
+                <span className="font-mono text-accent">carlos@residencial-altavista.com</span>
+              </p>
+              <p>
+                Contraseña: <span className="font-mono text-accent">demo</span>
+              </p>
             </div>
           </form>
         </div>

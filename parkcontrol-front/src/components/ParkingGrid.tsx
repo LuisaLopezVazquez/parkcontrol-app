@@ -3,14 +3,34 @@ import { Car } from "lucide-react";
 
 interface ParkingSpotCardProps {
   spot: ParkingSpot;
+  interactive?: boolean;
+  busy?: boolean;
+  onToggle?: (spot: ParkingSpot) => void;
 }
 
-function ParkingSpotCard({ spot }: ParkingSpotCardProps) {
+function ParkingSpotCard({ spot, interactive, busy, onToggle }: ParkingSpotCardProps) {
   const isOccupied = spot.status === "occupied";
 
   return (
     <div
-      className={`relative flex flex-col items-center justify-center rounded-lg border-2 p-3 transition-all duration-200 hover:scale-105 ${
+      role={interactive ? "button" : undefined}
+      tabIndex={interactive ? 0 : undefined}
+      aria-busy={busy || undefined}
+      aria-label={interactive ? `Cajón ${spot.number}, ${isOccupied ? "ocupado" : "disponible"}. Clic para alternar.` : undefined}
+      onClick={interactive && onToggle && !busy ? () => onToggle(spot) : undefined}
+      onKeyDown={
+        interactive && onToggle && !busy
+          ? (e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                onToggle(spot);
+              }
+            }
+          : undefined
+      }
+      className={`relative flex flex-col items-center justify-center rounded-lg border-2 p-3 transition-all duration-200 ${
+        interactive ? "cursor-pointer hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" : "hover:scale-105"
+      } ${busy ? "opacity-60 pointer-events-none" : ""} ${
         isOccupied
           ? "border-destructive/40 bg-destructive/8"
           : "border-available/40 bg-available/8"
@@ -39,9 +59,11 @@ function ParkingSpotCard({ spot }: ParkingSpotCardProps) {
 
 interface ParkingGridProps {
   spots: ParkingSpot[];
+  onToggleSpot?: (spot: ParkingSpot) => void;
+  togglingSpotId?: string | null;
 }
 
-export function ParkingGrid({ spots }: ParkingGridProps) {
+export function ParkingGrid({ spots, onToggleSpot, togglingSpotId }: ParkingGridProps) {
   return (
     <div className="rounded-xl border bg-card p-5 shadow-sm">
       <div className="mb-4 flex items-center justify-between">
@@ -59,7 +81,13 @@ export function ParkingGrid({ spots }: ParkingGridProps) {
       </div>
       <div className="grid grid-cols-5 gap-2 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10">
         {spots.map((spot) => (
-          <ParkingSpotCard key={spot.id} spot={spot} />
+          <ParkingSpotCard
+            key={spot.id}
+            spot={spot}
+            interactive={!!onToggleSpot}
+            busy={togglingSpotId === spot.id}
+            onToggle={onToggleSpot}
+          />
         ))}
       </div>
     </div>
