@@ -1,6 +1,6 @@
 /**
- * Cliente REST hacia Express (`server/` + `server/db.json`).
- * Patrón de auth: login devuelve `accessToken`; rutas protegidas envían `Authorization: Bearer`.
+ * Cliente REST → Express (`server/` + `server/db.json`).
+ * Auth: Bearer tras login; en dev Vite proxifica `/api` → puerto 3001.
  */
 import type { User, ParkingSpot, Vehicle, DashboardMetrics } from "./mockData";
 
@@ -18,7 +18,6 @@ function readStoredAccessToken(): string | null {
   return localStorage.getItem(STORAGE_ACCESS_TOKEN_KEY);
 }
 
-/** fetch con Bearer si hay token guardado (rutas protegidas). */
 function apiFetch(path: string, init?: RequestInit): Promise<Response> {
   const headers = new Headers(init?.headers);
   const token = readStoredAccessToken();
@@ -41,10 +40,7 @@ async function parseJson<T>(res: Response): Promise<T> {
   return (text ? JSON.parse(text) : null) as T;
 }
 
-export type LoginResponse = {
-  user: User;
-  accessToken: string;
-};
+export type LoginResponse = { user: User; accessToken: string };
 
 export async function login(email: string, password: string): Promise<LoginResponse> {
   const res = await fetch(apiUrl("/api/auth/login"), {
@@ -93,4 +89,44 @@ export async function updateParkingSpot(id: string, body: UpdateSpotBody): Promi
     body: JSON.stringify(body),
   });
   return parseJson<ParkingSpot>(res);
+}
+
+/** Lista completa (administración), orden descendente por fecha de registro. */
+export async function listVehicles(): Promise<Vehicle[]> {
+  const res = await apiFetch("/api/vehicles");
+  return parseJson<Vehicle[]>(res);
+}
+
+export async function getVehicle(id: string): Promise<Vehicle> {
+  const res = await apiFetch(`/api/vehicles/${encodeURIComponent(id)}`);
+  return parseJson<Vehicle>(res);
+}
+
+export type CreateVehiclePayload = Omit<Vehicle, "id"> & { id?: string };
+
+export async function createVehicle(payload: CreateVehiclePayload): Promise<Vehicle> {
+  const { id: _omit, ...rest } = payload;
+  const res = await apiFetch("/api/vehicles", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(rest),
+  });
+  return parseJson<Vehicle>(res);
+}
+
+export type UpdateVehiclePayload = Partial<Omit<Vehicle, "id">>;
+
+export async function updateVehicle(id: string, payload: UpdateVehiclePayload): Promise<Vehicle> {
+  const res = await apiFetch(`/api/vehicles/${encodeURIComponent(id)}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  return parseJson<Vehicle>(res);
+}
+
+export async function deleteVehicle(id: string): Promise<void> {
+  const res = await apiFetch(`/api/vehicles/${encodeURIComponent(id)}`, { method: "DELETE" });
+  if (res.status === 204) return;
+  if (!res.ok) await parseJson<never>(res);
 }

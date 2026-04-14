@@ -1,9 +1,9 @@
 {
   "sessions": [
     {
-      "token": "9a3d6c54-0046-49f5-9d2e-f264a7d4cefa",
+      "token": "b8750fb9-5111-4d56-99eb-6d98e8489027",
       "userId": "1",
-      "createdAt": "2026-04-11T19:03:05.305Z"
+      "createdAt": "2026-04-14T23:05:50.841Z"
     }
   ],
   "users": [
@@ -213,21 +213,21 @@
       "brand": "Mazda",
       "model": "3 2024",
       "color": "Rojo",
-      "ownerName": "Luis Ramírez",
+      "ownerName": "Jose hernandez",
       "unit": "410-A",
       "registeredAt": "2025-04-06",
       "spotNumber": "B-02"
     },
     {
       "id": "6",
-      "plate": "PQR-1122",
-      "brand": "Chevrolet",
-      "model": "Aveo 2022",
-      "color": "Plata",
-      "ownerName": "Sofía Hernández",
-      "unit": "215-B",
-      "registeredAt": "2025-04-05",
-      "spotNumber": "B-04"
+      "plate": "DFV-1456",
+      "brand": "Toyota Yaris",
+      "model": "2025",
+      "color": "Rojo",
+      "ownerName": "Luisa López",
+      "unit": "B-401",
+      "registeredAt": "2026-04-13",
+      "spotNumber": "10"
     }
   ]
 }
