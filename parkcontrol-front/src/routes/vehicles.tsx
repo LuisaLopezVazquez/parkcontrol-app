@@ -259,9 +259,13 @@ function VehiclesAdminPage() {
               </p>
 
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-                <label className="flex items-center gap-2 text-sm text-muted-foreground">
+                <label
+                  htmlFor="vehicles-page-size"
+                  className="flex items-center gap-2 text-sm text-muted-foreground"
+                >
                   <span className="whitespace-nowrap">Filas por página</span>
                   <select
+                    id="vehicles-page-size"
                     value={pageSize}
                     onChange={(e) => {
                       const n = Number(e.target.value);

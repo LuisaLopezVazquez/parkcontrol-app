@@ -5,10 +5,11 @@ import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-  { ignores: ["dist", ".output", ".vinxi"] },
+  { ignores: ["dist", ".output", ".vinxi", "coverage"] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ["src/**/*.{ts,tsx}"],
+    ignores: ["src/**/*.spec.ts", "src/**/*.spec.tsx"],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
@@ -25,7 +26,25 @@ export default tseslint.config(
   },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
-    files: ["server/**/*.ts", "vite.config.ts"],
+    files: ["src/**/*.spec.ts", "src/**/*.spec.tsx"],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: {
+        ...globals.browser,
+        ...globals.vitest,
+      },
+    },
+    plugins: {
+      "react-hooks": reactHooks,
+    },
+    rules: {
+      ...reactHooks.configs.recommended.rules,
+      "@typescript-eslint/no-unused-vars": "off",
+    },
+  },
+  {
+    extends: [js.configs.recommended, ...tseslint.configs.recommended],
+    files: ["server/**/*.ts", "vite.config.ts", "vitest.config.ts"],
     languageOptions: {
       ecmaVersion: 2022,
       globals: globals.node,
